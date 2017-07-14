@@ -1,0 +1,7 @@
+1.Study Protocol of EtherCat
+2.Configure PC to Master
+3.How to package data into EtherCat format?
+4.How slave handles the incoming data
+5.How slave sent the data back to master
+6.How to check the communication time?
+7.How to check the communication latency?
