@@ -1,0 +1,8 @@
+harware environment:
+ master:pc
+ slave:AM4379
+现在利用TwintCAT3在pc作为主站，am4379作为从站，包括环境搭建，驱动安装，
+并且用ccs编译测试了sdk/example/ethercat_slave（led)例子，能够从主站发送命令到从站上，
+并且用wireshark捕捉EtherCAT数据。
+AM4379作为从站的启动方式是SD卡，包括MLO（启动程序加载映像）和app（应用程序）。
+接下来，1：配置环境PRU-ICSS作为从站 2：从主站打包发送数据，返回想要的数据。
