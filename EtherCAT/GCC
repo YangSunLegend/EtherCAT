@@ -1,0 +1,21 @@
+GCC
+Setting Up The Tool Chain
+Make system configuration:
+1. The make system needs to be configured for the build environment.
+2. The Rules.make file at the root folder of the StarterWare installation contains the build environment used by the
+make system.
+3. The build variables in Rules.make need to be setup to point to the correct installation paths, depending on
+whether it is a Windows or Linux based build.
+4. KW_PATH in Rules.make stands for klocwork (static code checker) installation. This does not need to be
+specified if KW_BUILD is set as 'no' in Rules.make (default).
+Windows/Cygwin Linaro arm-none-eabi (command line):
+1. If a Windows host is used, then Cygwin needs to be installed for gcc build.
+2. Application makefiles invoke library makefiles internally.
+3. "set CYGPATH=cygpath" to convert Windows native style filenames to POSIX style file names. Not doing this
+might lead to linker errors while trying to find libc path.
+4. Ensure that the Linaro installation path does not contain any white space
+5. cygwin from the CCSv6 installation can be used. gmake from the xdc installation can be used.
+1. gmake is available at: <XDC installation dir>
+2. cygwin is available at: <CCS installation dir>/ccsv6/utils/cygwin
+6. Update (if required) the following GCC_PATH build environment variable to point to the correct installation
+paths.
