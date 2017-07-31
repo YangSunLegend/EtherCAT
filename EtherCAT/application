@@ -1,0 +1,15 @@
+EtherCAT
+NOTE 1: SDK Supports two different versions of EtherCAT application.
+1 . Simple Demo Application - An EtherCAT sample application built using pre-built EtherCAT stack library
+(libecat_slave_stack_am437x.a). This allows limited development using SSC5.10 stack library via Sample
+Application Interface which provides controlling 32- bit input and 32-bit output. Object dictionary adaptation is not
+possible in this evaluation version. This will be the default configuration for EtherCAT. The project files for this
+application can be found in $(IA_SDK_HOME)\examples\ethercat_slave. The example application will be delivered
+in source, but the EtherCAT stack will be delivered in object format only.
+2. Full Feature Demo Application - This is a full-fledged application and provides full flexibility and
+configurability. However this application need access to complete stack source. As per the SLA terms, TI cannot
+distribute the stack (Beckhoff Slave Sample Code) in source format. Therefore, to build this application, user must
+get the SSC 5.10 source code from ETG website and apply the provided patch. The project files for this application
+can be found in $(IA_SDK_HOME)\protocols\ethercat_slave\ecat_appl. Please see the details in later sections. For
+more information, refer the section on "Building Full Feature EtherCAT Application" of this document. This
+application includes motor control functionality
