@@ -1,0 +1,14 @@
+Aug 7 2017 work record
+对于实现PC为主站，AM4379 PRU-ICSS做为副站，下载 PRU-ICSS-EtherCAT_slave_01.00.0301
+对于测试AM5372内核满载电流，通过下载.out到指定文件，并且指定内核，从而测试下载，
+
+Industrial SDK is no longer supported. Please see the notice on top of the Sitara forum: e2e.ti.com/.../580869
+PRU-ICSS-EtherCAT_slave_01.00.0301 DOWNLOAD
+http://www.ti.com/tool/PRU-ICSS-INDUSTRIAL-SW
+RTOS and Industrial protocols can be downloaded here:
+software-dl.ti.com/.../index_FDS.html
+www.ti.com/.../PRU-ICSS-INDUSTRIAL-SW
+http://www.ti.com/tool/PRU-ICSS-INDUSTRIAL-SW 
+对于测试AM5372内核满载电流，通过下载.out到指定文件，并且指定内核，从而测试下载
+http://processors.wiki.ti.com/index.php/PRU_Training:_Hands-on_Labs
+这个是PRU-ICSS的，其他还有RTOS,DSP
