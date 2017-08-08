@@ -1,0 +1,133 @@
+Device support files
+
+IMPORTANT: CCSv5.2 and newer adds all the information present on this page for all the supported devices. Sometimes there may be some discrepancies between the files here and the ones provided with CCS, as this page may contain yet unreleased versions. 
+
+Contents [hide] 
+1 Introduction
+2 Usage:
+3 Device Support Files
+3.1 Sitara AMxxxx
+3.2 DaVinci (DMxxxx)
+3.3 OMAP
+3.4 C6-Integra
+3.5 C6000 DSPs
+3.6 C6000 Legacy Multicore DSPs
+3.7 C5500 DSPs
+3.8 Automotive
+3.9 Keystone 2
+3.10 Keystone 1
+3.11 Digital Power devices (UCD)
+3.12 mmWave Radar devices
+3.13 C5400 DSPs (up to CCSv5.5)
+Introduction
+If you ever tried to create a target configuration file in CCSv5 and could not find the 
+exact device of your board but only the generic one (TI816x, AM335x, etc.), this page is for you. 
+
+This page contains additional device support files to be used in Code Composer Studio target configuration files, 
+which were not included in the production version for several reasons, 
+but mostly due to a timely delivery when the product versions were being finished. 
+
+They add generic part numbers (i.e., without variant, packaging and speed info) and 
+evaluation boards to the list of devices in the target configuration editor. 
+Its newer releases also add linker command files, superseding the Linker CMD Files for CCS page. 
+
+Notes:
+
+These files are provided as-is without support.
+These files were tested with all CCSv6 releases. Several new device families are unsupported in CCSv4 and AM437x is untested in CCSv5.
+Despite all efforts to provide a complete set of registers, the device support may contain partial or complete peripheral registers for some devices.
+COMPATIBILITY NOTE: Several generic device part numbers (AM335x, TI816x, etc.) are removed from the package. If your target configuration file (.ccxml) uses one of them, you will have to re-generate it to match an actual device part number (AM3356, DM8168, etc.).
+Each device support ZIP file contains a file named <revision_history.txt> under the directory doc. It is important to read the information contained there.
+This information is being constantly updated. Check back regularly!
+
+Usage:
+IMPORTANT: The packages available on this page are also available via the CCS update online server, which has the benefit to automatically inform you when an update is available:
+
+For CCSv6, as of January 2015 this update online server is automatically added to CCSv6 releases. To do that, simply go to menu Help --> Check for Updates and look for the updates that contain the words "device support" on them.
+For CCSv5, save this File:Bookmarks device support.zip anywhere in your PC and, from within CCS, go to menu Window --> Preferences --> Install/Update --> Available Software Sites, click on the Import button and browse to the location you saved the file.
+
+IMPORTANT! These packages do not install the necessary compilers and other definitions for the device family. To properly add them, check section 3.1 of the Updating CCSv6 page. 
+
+1. Close Code Composer Studio 
+
+2. Download the file corresponding to your device family 
+
+3. Extract the file to the directory <CCS_INSTALL_DIR>/ccsv5/ccs_base. 
+Note: By default it can be either C:\\ti for Windows or /opt/ti for Linux
+Note: The packages Digital Power devices (UCD) and mmWave Radar devices must be extracted to the directory <CCS_INSTALL_DIR>/ccsv6
+
+4. Say yes to overwrite existing files 
+
+5. Run Code Composer Studio with the -clean option (ccstudio.exe -clean)
+
+Note: Running with the clean option ensures that the cache of the xml database gets updated
+
+Fig.1 - Before installing the device support for Sitara
+
+
+Fig.2 - After installing the device support for Sitara
+
+Device Support Files
+DISCLAIMER: All files below are provided under the provisions of the license below:
+
+Copyright (c) 2014, Texas Instruments Incorporated
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+*  Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+*  Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+*  Neither the name of Texas Instruments Incorporated nor the names of
+   its contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Sitara AMxxxx
+Sitara (AMxxxx) v1.3.6
+Note: The Shared support package is also required.
+DaVinci (DMxxxx)
+DaVinci (DMxxxx) v1.1.3
+Note: The Shared support package is also required.
+OMAP
+OMAP v1.0.9
+Note: The Shared support package is also required.
+C6-Integra
+C6-Integra (C6A8x & OMAP-L1x) v1.0.9
+OPTIONAL: PRU support for Primus family (it breaks compatibility with existing configurations)
+OMAPL137, C6743, C6745, C6747
+C6000 DSPs
+C6000 (C6xxx) v1.1.4
+Note: The Shared support package is also required.
+C6000 Legacy Multicore DSPs
+C6000 (C6xxx) v1.0.5
+C5500 DSPs
+C5000 (C55xx) v1.1.8
+Automotive
+Automotive v1.0.5
+Keystone 2
+Keystone 2 v1.1.9
+Keystone 1
+Keystone 1 v1.0.13
+Digital Power devices (UCD)
+Digital Power v1.1.3
+mmWave Radar devices
+mmWave Radar v1.5.5
+C5400 DSPs (up to CCSv5.5)
+C5400 (C54xx) v1.0.3
