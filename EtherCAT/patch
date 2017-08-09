@@ -1,0 +1,102 @@
+How to apply a patch/diff and solve “hunk FAILED”, “can’t find file to patch” and others
+by Markus Bertheau, last updated on May 17th, 2013 Leave a reply »
+
+ 
+de Deutsch
+Hi :)
+
+After you read this article, you’ll be able to apply patch files/diffs and deal with possible errors in the process.
+
+Let’s assume the patch is in the file fix-bug.patch (the extension doesn’t matter). The directory software-1.0 contains the files to patch. Applying a patch file/diff then works like this:
+
+Make a backup. On Linux you can use the command:
+markus@ubuntu:~$ cp -a software1.0.before-patch
+Run patch (for Windows: patch.exe) like this:
+markus@ubuntu:~$ patch -Np1 -d software-1.0 < fix-bug.patch
+Attention: this is patch minus N p digit one …, not minus N p small letter L!
+
+If the result looks something like this:
+
+markus@ubuntu:~$ patch -Np1 -d software-1.0 < fix-bug.patch
+patching file bar.h
+patching file quux.c
+patching file foo.txt
+markus@ubuntu:~$
+then it worked and the patch file applied cleanly.
+
+If you got different messages, they may be just warnings or they may be error messages. In any case the patch may have been applied incorrectly or only partially. To be safe, let’s restore from the backup first. Then we’ll figure out what the warning or error messages mean. To restore for Linux:
+
+markus@ubuntu:~$ rm -rf software-1.0
+markus@ubuntu:~$ cp -a software-1.0.before-patch software-1.0
+Error messages and how to handle them
+
+And now, here’s a list of messages that may appear. Each message links to a paragraph about what to do when this message appears.
+
+can't find file to patch at input line nnn. File to patch:
+No file to patch. Skipping patch. n out of n hunks ignored.
+Hunk #n FAILED at nnn. n out of n hunks FAILED -- saving rejects to file file.rej
+Hunk #n succeeded at nnn (offset n lines).
+Hunk #n succeeded at nnn with fuzz n.
+malformed patch at line nnn
+Reversed (or previously applied) patch detected!  Skipping patch.
+Reversed (or previously applied) patch detected!  Assume -R? [n]
+(Stripping trailing CRs from patch.)
+error message not listed here
+can’t find file to patch at input line nnn. File to patch: or
+No file to patch. Skipping patch. n out of n hunks ignored.
+
+At first make sure that you used the right patch command line, as shown above.
+
+If that still didn’t work, try with a higher n in -pn, up until maybe 6 (you can try more, but the chances that the problem is the wrong -p number get slimmer and slimmer :) ). To try, add --dry-run to the command line. With it the patch isn’t actually applied, but you get all the messages as if the patch were really applied. That way you can tell whether there would be any errors, without having to restore from backup every time. Here’s an example for -p2 and with --dry-run:
+
+markus@ubuntu:~$ patch --dry-run -Np2 -d software-1.0 < fix-bug.patch
+-p0 is almost always wrong. It causes patch to ignore subdirectories and assume that all files to patch are in the same directory.
+
+When you get a run without error messages about not finding the file to patch, then you have found the right number for -p. If there are other error messages, find them in the list of error messages. When you get a clean run without error messages, you can repeat without --dry-run to actually apply the patch.
+
+If all the fiddling with -p didn’t help and you still get the same error message, leave a comment :)
+
+Hunk #n FAILED at nnn. n out of n hunks FAILED — saving rejects to file file.rej
+
+This means that , called hunks, could not be introduced into the file. There’s , but it’s the easiest : Try adding --ignore-whitespace to the command line like this:
+
+markus@ubuntu:~$ patch -Np1 --ignore-whitespace -d software-1.0 < fix-bug.patch
+If that still gives you errors, it’s probably for another reason: The patch file file was made for a different version of the software than you use. There are with that:
+
+Get a patch file for your software version, or use the software version the patch file was made for.
+Ask patch to ignore the context of a change. Doing that will cause patch to take more risk of applying a change in the wrong place in a file. That means, that the patch may apply fine, but the software doesn’t work correctly after that. Add -F3 to the command line to try that. The command looks like this:
+markus@ubuntu:~$ patch -Np1 -F3 -d software-1.0 < fix-bug.patch
+Try to manually apply the changes that patch couldn’t apply. See the article How to read a patch or diff and understand its structure to apply it manually for an explanation how to do this.
+Hunk #n succeeded at nnn (offset n lines) and
+Hunk #n succeeded at nnn with fuzz n.
+
+Usually there’s no problem here and the patch could be applied completely. This message means that the patch file was originally made for a slightly different version of the software than you used. Still, in some cases patch may think it got it right, but really didn’t. If something doesn’t work and you think that the patch may have been applied incorrectly, you can use the same software version that the patch file was made for, or you can try to get a patch file for the software version you’re using.
+
+You can also manually apply the changes in the patch file and use your (uniquely human) capabilities to make sure that the end result still makes sense – something the patch program cannot do ;) . For that see the article How to read a patch or diff and understand its structure to apply it manually.
+
+malformed patch at line nnn
+
+The patch file is damaged. If you copy-pasted the patch from somewhere, be careful not to damage it. A patch file contains spaces at the start of lines, and these ofcopy-paste. The safest bet is to download the patch file. If the browser doesn’t download the patch, but instead displays it, use File -> Save.
+
+If you want to create a patch, you don’t have to write the patch file manually. The program diff does that. Short instructions:
+
+Create a copy of the original version of the software. On Linux:
+markus@ubuntu:~$ cp -a software1.0.orig
+Modify the software in software-1.0.
+Create the patch with diff:
+markus@ubuntu:~$ diff -Naur software-1.0.orig software-1.0 > fix-bug.patch
+Reversed (or previously applied) patch detected! Skipping patch.
+Reversed (or previously applied) patch detected! Assume -R? [n]
+
+That means that a change in the patch is already in the file. There are several reasons why that could be:
+
+The patch author mixed up original and new version. The patch file is now backwards – it creates the old version from the new version. When it finds the old version, patch sees that all changes are already there. Fortunately, patch can apply a patch in reverse. Use the -R option. Here is an example command line:
+markus@ubuntu:~$ patch -RNp1 -d software-1.0 < fix-bug.patch
+Your software version in fact already contains that patch. Maybe the software authors incorporated the patch already, and you downloaded a version that already contains the changes from that patch.
+(Stripping trailing CRs from patch.)
+
+Nothing to worry about here. The patch file applied cleanly and everything will work fine. The most probable cause of this message is that the patch was made on Windows and you are on Linux. Windows and Linux encode line endings differently – Windows ones have an additional CR. The message essentially means that Windows line endings have been converted to Linux line endings. Hackers just usually use hacker jargon when phrasing error messages :)
+
+error message not listed here
+
+Please leave a comment with the error message and if possible a link to the patch and that you want to apply the patch to. I’ll add the error message with an explanation to this list then.
