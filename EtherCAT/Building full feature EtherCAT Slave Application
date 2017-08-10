@@ -1,0 +1,66 @@
+对于TI给的ethercat_slave_full_AM437x_arm,学习step
+1.找到.bat 执行./bat argus AM437x arm ethercat_slave_full
+其中修改.bat中set的路径可能会出现error，可以解决，大部分都是路径，version
+2.生成的ethercat_slave_full_AM437x_arm project
+其中debug时会出现error
+Building full feature EtherCAT Slave Application
+ The EtherCAT example application provided in [INSTALL-DIR]/examples/ethercat_slave folder is a limited development 
+
+application. To have a full development capability on Sitara processor, it
+is necessary to get the EtherCAT Slave Stack Code (SSC) from Beckhoff and build this for Sitara processors. Ethercat full 
+
+mode example application provides all board specific
+implementation sources for EtherCAT and a patch file to modify Beckhoff source files for Sitara processors. This 
+
+application can be found in [INSTALL-DIR]/protocols/ethercat_slave/ecat_appl.
+This folder also includes the configuration xml file to be used for testing and it can be found in[INSTALL-
+
+DIR]/protocols/ethercat_slave/ecat_appl/esi folder.
+ The steps for building full feature EtherCAT application using Beckhoff stack source code are given below.
+
+1. Download EtherCAT stack version 5.11 from ETG website (http://www.ethercat.org/) and extract it to a local folder.
+下载倍福的ssc5.11源码，打补丁到src
+2. Apply ( See Apply instructions below) TI_ECAT.patch file found at [INSTALL-
+
+DIR]/third_party/protocols/ethercat_slave/patch on extracted Beckhoff stack code.
+   （Applying a Patch file
+Download Windows Patch Utility from gnuwin32 sourceforge (http://gnuwin32.sourceforge.net/downlinks/patch-bin-zip.php). ( 
+
+Note that this is not a TI tool - See licensing information
+(http://savannah.gnu.org/projects/patch/) page for more details)
+Download Dos2Unix/Unix2Dos-Text file format converters from gnuwin32 sourceforge 
+
+(https://sourceforge.net/projects/dos2unix/). ( Note that this is not a TI tool - See licensing
+information (http://savannah.gnu.org/projects/patch/) page for more details)
+Extract the zip files to the Windows PC. Patch file utility(Patch.exe) and unix2dos.exe utility can be found in their bin 
+
+folders.
+Launch DOS Command prompt ( Start->Run->cmd).
+CD to the folder [INSTALL-DIR]/third_party/protocols/ethercat_slave/patch which contains TI_ECAT.patch.
+Execute unix2dos.exe as given below
+[Dos2Unix/Unix2Dos-DIR]/bin/unix2dos.exe TI_ECAT.patch
+CD to patch file utility bin folder.
+Execute patch.exe as given below
+patch.exe -i PATCH_FILE_NAME -d SOURCE_DIR
+where PATCH_FILE is name of the patch file with full path and
+SOURCE_DIR is Directory with full path where source files are present.
+Example :
+patch.exe -i [INSTALL-DIR]/third_party/protocols/ethercat_slave/patch/TI_ECAT.patch -d c:\SSC_V5i11\SlaveFiles\src）
+这一步是下载 Windows Patch Utility from gnuwin32 sourceforge
+到TI.ECAT.patch 执行 [Dos2Unix/Unix2Dos-DIR]/bin/unix2dos.exe TI_ECAT.patch
+接下来到 patch.exe 所在目录执行  patch.exe -i PATCH_FILE_NAME -d SOURCE_DIR
+patch success 可能会出现 hunks failed ,这时候重新回到上一步
+3. Copy the patched Beckhoff source files (.c and .h) to [INSTALL-DIR]/protocols/ethercat_slave/ecat_appl/EcatStack
+全部复制
+4. Generate CCS project following [Steps_to_generate_Project_files 
+
+(http://processors.wiki.ti.com/index.php/PRU_ICSS_EtherCAT#Steps_to_generate_Project_files)]
+执行 ./bat 
+5. Launch CCS and import ethercat_slave_full application project found at the Project create directory (say, [INSTALL-
+
+DIR]/protocols/ethercat_slave/projects) to CCS
+6. Define macros in ecat_appl\EcatStack\ecat_def.h as required for your application.
+1. Ensure that TIESC_HW is set to 1
+2. For running default application, set TIESC_APPLICATION to 1 and CiA402_DEVICE to 0
+3. For running CiA402 application, set TIESC_APPLICATION to 0 and CiA402_DEVICE to 1.
+7. Build the project. This will generate the application binary which can be used to run on Sitara processors.
